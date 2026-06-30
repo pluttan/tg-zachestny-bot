@@ -1,0 +1,7 @@
+aiogram>=3.0
+aiosqlite
+aiohttp
+pydantic>=2.0
+pydantic-settings
+python-dotenv
+yookassa
