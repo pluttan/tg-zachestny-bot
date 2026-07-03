@@ -1,15 +1,9 @@
-![Header](header.png)
-
 <div align="center">
 
 # tg-zachestny-bot
 
 **Counterparty verification bot for Telegram**
 
-[![License](https://img.shields.io/badge/license-MIT-2C2C2C?style=for-the-badge&labelColor=1E1E1E)](LICENSE)
-[![Python](https://img.shields.io/badge/python-3.12-2C2C2C?style=for-the-badge&logo=python&labelColor=1E1E1E)]()
-[![Telegram](https://img.shields.io/badge/telegram-bot-2C2C2C?style=for-the-badge&logo=telegram&labelColor=1E1E1E)]()
-[![aiogram](https://img.shields.io/badge/aiogram-3.x-2C2C2C?style=for-the-badge&labelColor=1E1E1E)]()
 
 </div>
 
@@ -29,6 +23,8 @@ Telegram bot for verifying legal entities, individuals, and sole proprietors via
 
 ## ■ Stack
 
+<div align="center">
+
 | Component | Technology |
 |-----------|------------|
 | Bot | Python (aiogram 3.x) |
@@ -38,20 +34,27 @@ Telegram bot for verifying legal entities, individuals, and sole proprietors via
 | Data API | zachestnyibiznes.ru |
 | Config | pydantic-settings (.env) |
 
-## ■ Repository Structure
+</div>
+
+## ■ How It Works
 
 ```
-bot/
-├── main.py              # entrypoint: wires providers, runs polling + webhook server
-├── config.py            # pydantic-settings config (prices, tokens, webhook)
-├── texts_data.py        # all bot copy (Russian)
-├── handlers/            # user, admin, payment-webhook routers
-├── services/            # api_client, payment (YooKassa/mock), billing
-├── database/            # SQLite schema, connection, queries
-├── utils/               # keyboards, formatters, text helper
-├── Makefile             # install / run targets
-└── requirements.txt
+1. User selects a check type — legal entity (ЮЛ), individual (ФЛ), or sole proprietor (ИП)
+2. Bot creates a YooKassa payment for the corresponding price; user completes it inside Telegram
+3. On payment confirmation (webhook or status-polling fallback), bot prompts the user for the query
+4. Bot forwards the query to the zachestnyibiznes.ru API and formats the response
+5. Formatted report is delivered to the user and saved to per-user check history for re-rendering
 ```
+
+## ■ Screenshots
+
+<div align="center">
+
+![Screenshot](screenshots/main.png)
+
+*Main bot interface*
+
+</div>
 
 ## ■ Usage
 
@@ -69,9 +72,20 @@ make run
 # Without ZACHESTNY_API_KEY → MockAPIClient (demo mode).
 ```
 
-## ■ Screenshots
+## ■ Repository Structure
 
-![Screenshot](screenshots/main.png)
+```
+bot/
+├── main.py              # entrypoint: wires providers, runs polling + webhook server
+├── config.py            # pydantic-settings config (prices, tokens, webhook)
+├── texts_data.py        # all bot copy (Russian)
+├── handlers/            # user, admin, payment-webhook routers
+├── services/            # api_client, payment (YooKassa/mock), billing
+├── database/            # SQLite schema, connection, queries
+├── utils/               # keyboards, formatters, text helper
+├── Makefile             # install / run targets
+└── requirements.txt
+```
 
 ## ■ License
 
